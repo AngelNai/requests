@@ -1,31 +1,23 @@
 const express = require('express')
 const app = express()
+app.use(express.json())
 //http://localhost:3000/
 
-app.get('/:user/:password',(req, res)=>{
-    const {user, password}= req.params
-    if  (user ==='angel' && password=== '123'){
-        res.json({msg: 'inicio de sesion exitoso'})
-        return
-    }
 
-
-
-    res.status(404).json({msg:'error en el usuario o contraseña'})
-})
 
 //http://localhost:3000/login?user=angel&password=123
-app.get('/login',(req,res)=>{ //endpoint
-const queries=req.query
+
+app.post('/login',(req,res)=>{ 
+const {user, password}=req.body
 if(!user || !password){
-    res.status(400).json({msg:'uou need to provide <user> and <password> parameters'})
+    res.status(400).json({msg:'you need to provide <user> and <password> parameters'})
     return
 }
-if  (user ==='angel' && password=== '123'){
+if  (user === 'angel' && password=== '123'){
     res.json({msg: 'inicio de sesion exitoso'})
     return
 }
-res.json(queries)
+res.status(404).json({msg:'error en el usuario o contraseña'})
 })
 
 
